@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      
+
   workflow_dispatch:
 
 jobs:
@@ -20,11 +20,15 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy Resource Group
-        uses: Azure/cli@1.0.4
+      - name: Deploy Azure Resource Group
+        uses: Azure/arm-deploy@v1
         with:
-          inlinescript: |
-            az deployment sub create --location "West Europe" --template-file ./arm-templates/resourcegroup.json
+          scope: subscription
+          subscriptionId: 88889a60-a3db-43d5-8aa2-13a81a03bc80
+          region: West Europe
+          template: ./arm-templates/resourcegroup.json
+          deploymentName: rg-githubactions
+
 
 
 
